@@ -24,7 +24,7 @@ pdir_syncs="$( cd "$(dirname "$0")" ; pwd -P )"
 # I am using .mp3 at the moment.
 file_type="*.mp3"
 
-
+# Go through the passed options.
 while getopts 'r:t:h' opt; do
   case "$opt" in
     r)
