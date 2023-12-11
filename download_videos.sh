@@ -9,8 +9,12 @@
 # Gets the location of the script
 pdir="$( cd "$(dirname "$0")" ; pwd -P )"
 ffmpeg_location="$(which ffmpeg)"
-# where to drop our files downloaded/converted files
-channels_path="/sdcard/Podcasts/channels/"
+# where to drop our downloaded/converted files
+channels_path="/LeedyData/leedymedia/audio_from_youtube"
+#channels_path="/sdcard/Podcasts/channels/"
+
+# How many days back of content to download
+content_age=3
 
 # make sure we have a channel list
 if [[ ! -a "$pdir/channels.txt" ]]; then
@@ -40,7 +44,7 @@ while read line; do
 	fi
 	cd $chan_path
 
-	video_filters="--dateafter now-7days --playlist-end 5"
+	video_filters="--dateafter now-"$content_age"days --playlist-end 5"
 	output_options="--download-archive dl_archive.txt -o %(upload_date)s%(fulltitle)s.%(ext)s"
 	misc_options="--no-call-home --no-progress -N 2"
 
@@ -65,4 +69,4 @@ cd "$pdir"
 # -r is the age at which to start removing the files.
 # -t is the target directory.
 # These are preset in the script.
-$pdir/sync_files.sh -r 3
+$pdir/sync_files.sh -r $content_age -t "$channels_path"

@@ -7,11 +7,14 @@
 
 # Default preset for the target directory to remove files. You can preset this in the variable below.
 # $0 -t "/sdcard/Podcasts/channels/"
+# $0 -t "/LeedyData/leedymedia/audio_from_youtube"
 ##
 
 ## Default presets
 # Preset target directory if not passed as argument.
-preset_target_dir="/sdcard/Podcasts/channels/"
+#preset_target_dir="/sdcard/Podcasts/channels/"
+preset_target_dir="/LeedyData/leedymedia/audio_from_youtube"
+
 # How old in Days should it be to remove?
 file_age=3
 remove_all_files=false
@@ -30,7 +33,7 @@ while getopts 'r:t:h' opt; do
     r)
 	# If OPTARG is a number, then remove all older days of that number
 	if [[ $OPTARG == ?(-)+([[:digit:]]) ]]; then
-		file_Age="$OPTARG"
+		file_age="$OPTARG"
 		echo "Removing audio files older than $file_age days."
 	elif [ $OPTARG = "all" ]; then
 	# Else if OPTARG is 'all' then remove all audio files.
@@ -82,3 +85,9 @@ else
 	#find "$preset_target_dir" -name "$file_type" -type f -mtime +$file_age
 	find "$preset_target_dir" -name "$file_type" -type f -mtime +$file_age -delete
 fi
+
+# Sometimes the script borks and leaves partial files behind. Let's remove those.
+# *.part
+# *.ytdl
+find "$preset_target_dir" -name "*.part" -type f -delete
+find "$preset_target_dir" -name "*.ytdl" -type f -delete
