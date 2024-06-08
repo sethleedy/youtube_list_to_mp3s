@@ -14,7 +14,7 @@ channels_path="/LeedyData/leedymedia/audio_from_youtube"
 #channels_path="/sdcard/Podcasts/channels/"
 
 # How many days back of content to download
-content_age=3
+content_age=1
 
 # make sure we have a channel list
 if [[ ! -a "${pdir}/channels.txt" ]]; then
